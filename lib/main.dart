@@ -4,8 +4,9 @@ int? isViewed ;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  isViewed = await prefs.getInt("onBoard");
+  isViewed = prefs.getInt("onBoard");
   runApp(const MyApp());
 }
 
