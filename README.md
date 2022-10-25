@@ -1,6 +1,6 @@
 # sd1_flutter_assessment
 
-A new Flutter project - Flutter Assessment (Vimigo)
+A new Flutter project - Flutter Assessment
 
 ## Getting Started
 
