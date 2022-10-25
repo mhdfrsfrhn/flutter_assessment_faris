@@ -22,7 +22,6 @@ class _FormAddScreenState extends State<FormAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(contactKey.toString());
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
@@ -37,7 +36,6 @@ class _FormAddScreenState extends State<FormAddScreen> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 _buildTextFieldName(),
                 _buildTextFieldPhone(),
@@ -45,7 +43,6 @@ class _FormAddScreenState extends State<FormAddScreen> {
                   children: [
                     Flexible(child: _buildTextFieldDateTime()),
                     const SizedBox(width: 50),
-                    // Flexible(child: _buildTextFieldAge()),
                   ],
                 ),
                 Padding(
@@ -64,14 +61,17 @@ class _FormAddScreenState extends State<FormAddScreen> {
 
                         return;
                       }
-                      // print("writing");
                       Map<String, dynamic> data = {
                         "user": _controllerName.text.toString(),
                         "phone": _controllerPhone.text.toString(),
                         "check-in": reformatDateToSave(_controllerDate.text),
                       };
                       dbRef.push().set(data).then((value) {
-                        Navigator.of(context).pop();
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomeScreen()),
+                          (Route<dynamic> route) => false,
+                        );
                       });
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

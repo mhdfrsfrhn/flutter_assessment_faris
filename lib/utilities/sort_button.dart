@@ -15,46 +15,37 @@ Widget sortButton(BuildContext context) {
       context: context,
       builder: (BuildContext context) => Dialog(
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              ListTile(
-                title: const Center(child: Text('Sort By ')),
-                // onTap: () {
-                //   Navigator.pop(context);
-                // },
+              const ListTile(
+                title: Center(child: Text('Sort By ')),
               ),
-              Divider(
+              const Divider(
                 color: Colors.black12,
                 thickness: 3,
               ),
               ListTile(
-                // leading: Icon(Icons.photo),
-                title: Text('Name'),
+                title: const Text('Name'),
                 onTap: () {
                   choice = 'user';
-                  print(choice);
-
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                    // this mainpage is your page to refresh
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                     (Route<dynamic> route) => false,
                   );
                 },
               ),
-              Divider(color: Colors.black12),
+              const Divider(color: Colors.black12),
               ListTile(
                 dense: false,
-                title: Text('Check-in time'),
+                title: const Text('Check-in time'),
                 onTap: () {
                   choice = 'check-in';
-                  print(choice);
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                    // this mainpage is your page to refresh
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                     (Route<dynamic> route) => false,
                   );
                 },

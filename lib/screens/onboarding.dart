@@ -1,15 +1,14 @@
-import 'package:sd1_flutter_assessment/imports.dart';
+import '../imports.dart';
 
 class OnboardModel {
   String img;
-  String text;
+
   String desc;
   Color bg;
   Color button;
 
   OnboardModel({
     required this.img,
-    required this.text,
     required this.desc,
     required this.bg,
     required this.button,
@@ -17,37 +16,44 @@ class OnboardModel {
 }
 
 class OnBoard extends StatefulWidget {
+  const OnBoard({Key? key}) : super(key: key);
+
   @override
   _OnBoardState createState() => _OnBoardState();
 }
 
 class _OnBoardState extends State<OnBoard> {
   int currentIndex = 0;
+  Color kwhite = const Color(0xFFFFFFFF);
+  Color kblack = const Color(0xFF000000);
+  Color kblue = const Color(0xFF4756DF);
   late PageController _pageController;
   List<OnboardModel> screens = <OnboardModel>[
     OnboardModel(
-      img: 'assets/images/logo_vitbhopal.png',
-      text: "Belajar Dengan Metode Learning by Doing",
-      desc:
-      "Sebuah metode belajar yang terbuktiampuh dalam meningkatkan produktifitas belajar, Learning by Doing",
+      img: 'assets/images/welcome.png',
+      desc: "",
       bg: Colors.white,
-      button: Color(0xFF4756DF),
+      button: const Color(0xFF4756DF),
     ),
     OnboardModel(
-      img: 'assets/images/developer_gif.gif',
-      text: "Dapatkan Kemudahan Akses Kapanpun dan Dimanapun",
+      img: 'assets/images/1.png',
       desc:
-      "Tidak peduli dimanapun kamu, semua kursus yang telah kamu ikuti bias kamu akses sepenuhnya",
-      bg: Color(0xFF4756DF),
+          "1. Search contact list by name keyword \n2. Choose to sort list based on Name or Check-in time.",
+      bg: Colors.white,
+      button: const Color(0xFF4756DF),
+    ),
+    OnboardModel(
+      img: 'assets/images/2.png',
+      desc:
+          "3. Indicator showing number of contact in list \n4. Press button to add new contact.",
+      bg: const Color(0xFF4756DF),
       button: Colors.white,
     ),
     OnboardModel(
-      img: 'assets/images/backgroundImg.png',
-      text: "Gunakan Fitur Kolaborasi Untuk Pengalaman Lebih",
-      desc:
-      "Tersedia fitur Kolaborasi dengan tujuan untuk mengasah skill lebih dalam karena bias belajar bersama",
+      img: 'assets/images/3.png',
+      desc: "You can always come back here if you feel lost :)",
       bg: Colors.white,
-      button: Color(0xFF4756DF),
+      button: const Color(0xFF4756DF),
     ),
   ];
 
@@ -64,31 +70,29 @@ class _OnBoardState extends State<OnBoard> {
   }
 
   _storeOnboardInfo() async {
-    print("Shared pref called");
     int isViewed = 0;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('onBoard', isViewed);
-    print(prefs.getInt('onBoard'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: currentIndex % 2 == 0 ? kwhite : kblue,
+      backgroundColor: kwhite,
       appBar: AppBar(
-        backgroundColor: currentIndex % 2 == 0 ? kwhite : kblue,
+        backgroundColor: kwhite,
         elevation: 0.0,
         actions: [
           TextButton(
             onPressed: () {
               _storeOnboardInfo();
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
             },
             child: Text(
               "Skip",
               style: TextStyle(
-                color: currentIndex % 2 == 0 ? kblack : kwhite,
+                color: kblack,
               ),
             ),
           )
@@ -99,7 +103,7 @@ class _OnBoardState extends State<OnBoard> {
         child: PageView.builder(
             itemCount: screens.length,
             controller: _pageController,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (int index) {
               setState(() {
                 currentIndex = index;
@@ -112,83 +116,47 @@ class _OnBoardState extends State<OnBoard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(screens[index].img),
-                  Container(
-                    height: 10.0,
-                    child: ListView.builder(
-                      itemCount: screens.length,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 3.0),
-                                width: currentIndex == index ? 25 : 8,
-                                height: 8,
-                                decoration: BoxDecoration(
-                                  color: currentIndex == index
-                                      ? kbrown
-                                      : kbrown300,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
-                            ]);
-                      },
-                    ),
-                  ),
-                  Text(
-                    screens[index].text,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 27.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Poppins',
-                      color: index % 2 == 0 ? kblack : kwhite,
-                    ),
-                  ),
                   Text(
                     screens[index].desc,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14.0,
                       fontFamily: 'Montserrat',
-                      color: index % 2 == 0 ? kblack : kwhite,
+                      color: kblack,
                     ),
                   ),
                   InkWell(
                     onTap: () async {
-                      print(index);
                       if (index == screens.length - 1) {
                         await _storeOnboardInfo();
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()));
                       }
 
                       _pageController.nextPage(
-                        duration: Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.bounceIn,
                       );
                     },
                     child: Container(
                       padding:
-                      EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+                          const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
                       decoration: BoxDecoration(
-                          color: index % 2 == 0 ? kblue : kwhite,
+                          color: kblue,
                           borderRadius: BorderRadius.circular(15.0)),
                       child: Row(mainAxisSize: MainAxisSize.min, children: [
                         Text(
                           "Next",
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              color: index % 2 == 0 ? kwhite : kblue),
+                          style: TextStyle(fontSize: 16.0, color: kwhite),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15.0,
                         ),
                         Icon(
                           Icons.arrow_forward_sharp,
-                          color: index % 2 == 0 ? kwhite : kblue,
+                          color: kwhite,
                         )
                       ]),
                     ),

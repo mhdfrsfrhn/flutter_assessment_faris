@@ -21,12 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: isViewed != 0 || isViewed == null ? OnBoard() : const HomeScreen(),
-      // initialRoute: initScreen == true ? "onboard" : "/",
-      // routes: {
-      //   '/': (context) => HomeScreen(),
-      //   'onboard': (context) => OnBoardingScreen(),
-      // }
+      home: isViewed != 0 || isViewed == null ? const OnBoard() : const HomeScreen(),
     );
   }
 }
